@@ -1,5 +1,5 @@
 /* =============================================================
-   Backend Development Fundamentals — JavaScript
+   Fundamentos del Desarrollo Backend — JavaScript
    - Animaciones de aparición al hacer scroll (IntersectionObserver)
    - Resaltado del enlace activo en la navegación
    ============================================================= */

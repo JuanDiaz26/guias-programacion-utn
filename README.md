@@ -1,4 +1,4 @@
-# Backend Development Fundamentals
+# Fundamentos del Desarrollo Backend
 
 Landing page educativa sobre conceptos de desarrollo backend para la materia
 **Programación** (UTN — Facultad Regional, Comisión 2).
