@@ -386,19 +386,25 @@ nav {
   padding: 1rem 0.5rem;
 }
 .vs-badge span {
+  position: relative;
+  display: block;
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+.vs-badge span i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* el -0.06em compensa la inclinación de la cursiva (que tira a la derecha) */
+  transform: translate(calc(-50% - 0.06em), -50%);
   font-family: var(--serif);
   font-style: italic;
   font-weight: 900;
   font-size: 1.6rem;
   line-height: 1;
   color: var(--accent);
-  background: var(--bg);
-  border: 1px solid var(--border);
-  width: 64px; height: 64px;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 50%;
-  /* compensa la inclinación de la cursiva para centrar el glifo */
-  text-indent: 0.1em;
 }
 
 /* ---------- Flow diagram (S3) ---------- */
