@@ -231,6 +231,6 @@ decir, se **conecta** a una base que ya está corriendo para gestionarla.
 ## Autor
 
 - **Alumno:** Juan Gabriel Díaz
-- **Materia:** Programación — Comisión 2
+- **Materia:** Programación 2 — Comisión 2
 - **Institución:** UTN — Facultad Regional
-- **Año:** 2025
+- **Año:** 2026
