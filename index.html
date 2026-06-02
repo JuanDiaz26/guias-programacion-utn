@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Backend Development Fundamentals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="brand">~/backend<b>.dev</b><span class="cursor" style="height:0.9em;width:0.5em;vertical-align:middle;"></span></div>
+    <ul class="nav-links">
+      <li><a href="#definiciones"><span class="n">01</span>Definiciones</a></li>
+      <li><a href="#versus"><span class="n">02</span>Express vs Node</a></li>
+      <li><a href="#middleware"><span class="n">03</span>Middleware</a></li>
+      <li><a href="#bd"><span class="n">04</span>Base de Datos</a></li>
+      <li><a href="#tools"><span class="n">05</span>Heidi vs XAMPP</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero wrap">
+  <div class="hero-tag reveal"><span class="dot"></span> Universidad · Programación · Backend</div>
+  <h1 class="reveal d1">Backend Development <span class="accent">Fundamentals</span><span class="cursor"></span></h1>
+  <p class="hero-sub reveal d2">
+    Node.js<span class="sep">·</span>Express<span class="sep">·</span>Prisma<span class="sep">·</span>MySQL<span class="sep">·</span>Middleware
+  </p>
+  <p class="hero-tagline reveal d3">"Las herramientas que conectan el código con los datos."</p>
+  <div class="hero-meta reveal d4">
+    <span><b>05</b>secciones</span>
+    <span><b>5</b>conceptos clave</span>
+    <span><b>2025</b>comisión 2</span>
+  </div>
+</header>
+
+<!-- SECTION 1 -->
+<section id="definiciones" class="section-pad">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">01</span>
+      <div>
+        <span class="sec-kicker">Definiciones</span>
+        <h2 class="sec-title">¿Qué es y para qué sirve?</h2>
+      </div>
+    </div>
+
+    <div class="cards reveal d1">
+      <article class="card">
+        <span class="card-idx">01</span>
+        <span class="card-glyph">◭</span>
+        <span class="card-tag">ORM · Type-safe</span>
+        <h3>Prisma v7</h3>
+        <p>ORM moderno para Node.js y TypeScript. Ofrece un schema declarativo, migraciones automáticas y un cliente type-safe para bases de datos relacionales y no relacionales. Sirve para interactuar con la base de datos sin escribir SQL crudo.</p>
+      </article>
+
+      <article class="card">
+        <span class="card-idx">02</span>
+        <span class="card-glyph">⬢</span>
+        <span class="card-tag">Runtime · V8</span>
+        <h3>Node.js</h3>
+        <p>Entorno de ejecución de JavaScript del lado del servidor basado en el motor V8 de Chrome. Sirve para construir aplicaciones de red escalables, APIs REST y servidores de alto rendimiento.</p>
+      </article>
+
+      <article class="card">
+        <span class="card-idx">03</span>
+        <span class="card-glyph">▤</span>
+        <span class="card-tag">RDBMS · SQL</span>
+        <h3>MySQL</h3>
+        <p>Sistema de gestión de bases de datos relacional (RDBMS) de código abierto. Organiza datos en tablas con relaciones definidas mediante claves primarias y foráneas. Sirve para almacenar, consultar y gestionar datos de forma estructurada.</p>
+      </article>
+
+      <article class="card">
+        <span class="card-idx">04</span>
+        <span class="card-glyph">⟶</span>
+        <span class="card-tag">Framework · HTTP</span>
+        <h3>Express</h3>
+        <p>Framework minimalista para Node.js. Sirve para crear servidores HTTP, definir rutas, manejar parámetros y encadenar middlewares de forma sencilla y organizada.</p>
+      </article>
+
+      <article class="card">
+        <span class="card-idx">05</span>
+        <span class="card-glyph">⇄</span>
+        <span class="card-tag">Pipeline · req/res</span>
+        <h3>Middleware</h3>
+        <p>Función que se ejecuta entre la recepción de un request y el envío de un response. Sirve para autenticación, logging, validación de datos, manejo de errores y CORS. Puede modificar el request/response o pasar el control con <code>next()</code>.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2 -->
+<section id="versus" class="section-pad">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">02</span>
+      <div>
+        <span class="sec-kicker">Comparación</span>
+        <h2 class="sec-title">Express vs Node Puro</h2>
+      </div>
+    </div>
+
+    <div class="versus reveal d1">
+      <div class="vs-col left">
+        <span class="label">Bajo nivel</span>
+        <h3>Node.js puro</h3>
+        <p>Requiere escribir manualmente el servidor HTTP con <code style="color:var(--accent)">http.createServer</code>, parsear rutas a mano, gestionar cabeceras y manejar cada request con código de bajo nivel.</p>
+        <div class="term">
+          <div class="term-bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="name">server-node.js</span></div>
+          <pre><code><span class="k">const</span> http <span class="p">=</span> <span class="fn">require</span><span class="p">(</span><span class="s">'http'</span><span class="p">);</span>
+
+<span class="k">const</span> server <span class="p">=</span> http<span class="p">.</span><span class="fn">createServer</span><span class="p">((</span>req<span class="p">,</span> res<span class="p">) =&gt; {</span>
+  <span class="k">if</span> <span class="p">(</span>req<span class="p">.</span>url <span class="p">===</span> <span class="s">'/'</span> <span class="p">&amp;&amp;</span> req<span class="p">.</span>method <span class="p">===</span> <span class="s">'GET'</span><span class="p">) {</span>
+    res<span class="p">.</span><span class="fn">writeHead</span><span class="p">(</span><span class="num">200</span><span class="p">, {</span> <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'text/plain'</span> <span class="p">});</span>
+    res<span class="p">.</span><span class="fn">end</span><span class="p">(</span><span class="s">'Hola mundo'</span><span class="p">);</span>
+  <span class="p">} else {</span>
+    res<span class="p">.</span><span class="fn">writeHead</span><span class="p">(</span><span class="num">404</span><span class="p">);</span>
+    res<span class="p">.</span><span class="fn">end</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+server<span class="p">.</span><span class="fn">listen</span><span class="p">(</span><span class="num">3000</span><span class="p">);</span></code></pre>
+        </div>
+      </div>
+
+      <div class="vs-badge"><span>vs</span></div>
+
+      <div class="vs-col right">
+        <span class="label">Abstracción</span>
+        <h3>Express</h3>
+        <p>Abstrae esa complejidad. Ofrece routing declarativo, manejo de parámetros, integración de middlewares y respuestas simplificadas. <b style="color:var(--accent)">Menos código, más estructura.</b></p>
+        <div class="term">
+          <div class="term-bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="name">server-express.js</span></div>
+          <pre><code><span class="k">const</span> express <span class="p">=</span> <span class="fn">require</span><span class="p">(</span><span class="s">'express'</span><span class="p">);</span>
+<span class="k">const</span> app <span class="p">=</span> <span class="fn">express</span><span class="p">();</span>
+
+app<span class="p">.</span><span class="fn">get</span><span class="p">(</span><span class="s">'/'</span><span class="p">, (</span>req<span class="p">,</span> res<span class="p">) =&gt; {</span>
+  res<span class="p">.</span><span class="fn">send</span><span class="p">(</span><span class="s">'Hola mundo'</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c">// routing declarativo + parámetros</span>
+app<span class="p">.</span><span class="fn">get</span><span class="p">(</span><span class="s">'/user/:id'</span><span class="p">, (</span>req<span class="p">,</span> res<span class="p">) =&gt; {</span>
+  res<span class="p">.</span><span class="fn">json</span><span class="p">({</span> id<span class="p">:</span> req<span class="p">.</span>params<span class="p">.</span>id <span class="p">});</span>
+<span class="p">});</span>
+
+app<span class="p">.</span><span class="fn">listen</span><span class="p">(</span><span class="num">3000</span><span class="p">);</span></code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3 -->
+<section id="middleware" class="section-pad">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">03</span>
+      <div>
+        <span class="sec-kicker">Pipeline</span>
+        <h2 class="sec-title">¿Qué es un Middleware?</h2>
+      </div>
+    </div>
+
+    <p class="flow-def reveal d1">
+      Un middleware es una función que se ejecuta entre la recepción de una solicitud
+      (<code>request</code>) y el envío de una respuesta (<code>response</code>). Puede modificar el
+      request/response, ejecutar lógica, o pasar el control al siguiente middleware con <code>next()</code>.
+    </p>
+
+    <div class="flow reveal d2">
+      <div class="flow-node endpt">Request<small>entrada</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node mw">Middleware 1<small>logging</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node mw">Middleware 2<small>auth</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">Route Handler<small>lógica</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node endpt">Response<small>salida</small></div>
+    </div>
+
+    <div class="reveal d3">
+      <p style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.2em;color:var(--text-faint);margin-bottom:1rem;">Casos de uso</p>
+      <div class="usecases">
+        <span class="chip">Autenticación</span>
+        <span class="chip">Logging</span>
+        <span class="chip">Validación de datos</span>
+        <span class="chip">Manejo de errores</span>
+        <span class="chip">CORS</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4 -->
+<section id="bd" class="section-pad">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">04</span>
+      <div>
+        <span class="sec-kicker">Persistencia</span>
+        <h2 class="sec-title">Reglas de Negocio y Relaciones en BD</h2>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="reveal d1">
+        <h3 class="sub-h"><span class="marker">{ }</span> Reglas de Negocio en la BD</h3>
+        <p style="font-size:0.85rem;color:var(--text-dim);margin-bottom:1.25rem;">
+          Constraints que garantizan la integridad de datos:
+        </p>
+        <ul class="constraints">
+          <li>NOT NULL</li>
+          <li>UNIQUE</li>
+          <li>CHECK</li>
+          <li>DEFAULT</li>
+          <li>PRIMARY KEY</li>
+          <li>FOREIGN KEY</li>
+        </ul>
+        <div class="note">
+          <b>Ejemplo:</b> "Un pedido no puede existir sin un cliente asociado." → la <code style="color:var(--accent)">FOREIGN KEY</code> impide registros huérfanos.
+        </div>
+      </div>
+
+      <div class="reveal d2">
+        <h3 class="sub-h"><span class="marker">⇄</span> Relaciones entre Entidades</h3>
+        <div class="rel-list">
+          <div class="rel">
+            <span class="type">1:1</span>
+            <div>
+              <span class="rel-name">One to One</span>
+              <span class="rel-ex">Usuario <span class="arrow">→</span> Perfil</span>
+            </div>
+          </div>
+          <div class="rel">
+            <span class="type">1:N</span>
+            <div>
+              <span class="rel-name">One to Many</span>
+              <span class="rel-ex">Cliente <span class="arrow">→</span> Pedidos</span>
+            </div>
+          </div>
+          <div class="rel">
+            <span class="type">N:M</span>
+            <div>
+              <span class="rel-name">Many to Many · tabla intermedia</span>
+              <span class="rel-ex">Estudiantes <span class="arrow">↔</span> Materias</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5 -->
+<section id="tools" class="section-pad">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">05</span>
+      <div>
+        <span class="sec-kicker">Herramientas</span>
+        <h2 class="sec-title">HeidiSQL vs XAMPP</h2>
+      </div>
+    </div>
+
+    <div class="tool-grid reveal d1">
+      <div class="tool">
+        <span class="icon">▦</span>
+        <h3>HeidiSQL</h3>
+        <p>Cliente gráfico para gestionar bases de datos MySQL, MariaDB, PostgreSQL y otros. Sirve para visualizar tablas, ejecutar consultas SQL, importar/exportar datos y administrar la BD de forma visual sin usar la línea de comandos.</p>
+      </div>
+      <div class="tool">
+        <span class="icon">⛁</span>
+        <h3>XAMPP</h3>
+        <p>Paquete de software que incluye Apache (servidor web), MySQL/MariaDB, PHP y Perl. Sirve para montar un entorno de desarrollo local completo en pocos minutos, sin configuración manual.</p>
+      </div>
+    </div>
+
+    <div class="diffs reveal d2">
+      <div class="diff-title"><span class="accent">//</span> Diferencias clave</div>
+      <div class="diff-table">
+        <div class="diff-cell crit">Función</div>
+        <div class="diff-cell head xampp">XAMPP</div>
+        <div class="diff-cell head heidi">HeidiSQL</div>
+
+        <div class="diff-cell crit">Rol</div>
+        <div class="diff-cell"><em>Levanta</em> el servidor y la base de datos.</div>
+        <div class="diff-cell">Se <em>conecta</em> a esa base de datos para administrarla.</div>
+
+        <div class="diff-cell crit">Naturaleza</div>
+        <div class="diff-cell">Es un <em>entorno de ejecución</em> completo.</div>
+        <div class="diff-cell">Es solo una <em>interfaz de administración</em>.</div>
+
+        <div class="diff-cell crit">Cómo se usan</div>
+        <div class="diff-cell">Corre <b>MySQL</b> y el servidor web.</div>
+        <div class="diff-cell">Lo <em>gestiona visualmente</em>. Se usan <b>juntos</b>.</div>
+      </div>
+    </div>
+
+    <div class="pipe reveal d3">
+      <div class="pipe-box">
+        <span class="pb-icon">⛁</span>
+        <b>XAMPP</b>
+        <small>motor corriendo</small>
+      </div>
+      <span class="pipe-arrow">→</span>
+      <div class="pipe-box">
+        <span class="pb-icon">▦</span>
+        <b>HeidiSQL</b>
+        <small>ventana de administración</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="reveal">
+        <div class="foot-brand">Backend<br><span class="accent">Fundamentals</span></div>
+        <p style="font-size:0.78rem;color:var(--text-faint);margin-top:1rem;font-style:italic;font-family:var(--serif);">"Las herramientas que conectan el código con los datos."</p>
+      </div>
+      <div class="foot-col reveal d1">
+        <h4>Institución</h4>
+        <p>Comisión 2 de Programación</p>
+        <p>UTN — Facultad Regional</p>
+        <p>Materia: Programación</p>
+      </div>
+      <div class="foot-col reveal d2">
+        <h4>Autor</h4>
+        <p>Alumno: <b>Juan Gabriel Díaz</b></p>
+        <p>Año: <b>2025</b></p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span><span class="accent">$</span> echo "backend fundamentals" — 2025</span>
+      <span>Node.js · Express · Prisma · MySQL</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
