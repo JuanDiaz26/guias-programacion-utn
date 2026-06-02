@@ -709,6 +709,9 @@ footer {
   .flow-node { width: 100%; }
   .flow-arrow { transform: rotate(90deg); padding: 0.3rem 0; align-self: center; }
   .nav-links { gap: 0; }
+  /* XAMPP -> HeidiSQL: en columna con la flecha centrada abajo */
+  .pipe { flex-direction: column; }
+  .pipe-box { width: 100%; }
   .pipe-arrow { transform: rotate(90deg); }
 
   /* Hero: centrado y mejor balanceado en celular */
