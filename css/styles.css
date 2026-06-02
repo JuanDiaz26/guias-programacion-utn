@@ -35,7 +35,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; overflow-x: hidden; }
 
 body {
   background: var(--bg);
@@ -317,6 +317,7 @@ nav {
   border-radius: 6px;
   overflow: hidden;
   font-size: 0.8rem;
+  max-width: 100%;
 }
 .term-bar {
   background: var(--bg-elev);
@@ -363,6 +364,9 @@ nav {
   padding: 2rem;
   display: flex;
   flex-direction: column;
+  /* permite que la columna se encoja: el código hace scroll interno
+     en vez de estirar el ancho de toda la página en celular */
+  min-width: 0;
 }
 .vs-col.right { border-color: var(--accent); box-shadow: 0 0 40px -20px var(--accent-glow); }
 .vs-col h3 {
