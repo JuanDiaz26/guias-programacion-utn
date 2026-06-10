@@ -743,7 +743,7 @@ footer {
 /* ---------- Tarjetas de lenguajes / tecnologías (con color de marca) ---------- */
 .lang-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1px;
   background: var(--border);
   border: 1px solid var(--border);
@@ -800,6 +800,25 @@ footer {
   border-radius: 3px;
   font-size: 0.95em;
 }
+
+/* Categoría con una sola tarjeta: ocupa todo el ancho en layout horizontal
+   (ícono + título a la izquierda, descripción a la derecha) para no dejar hueco */
+.lang-grid.solo { grid-template-columns: 1fr; }
+.lang-grid.solo .lang-card {
+  display: grid;
+  grid-template-columns: 230px 1fr;
+  grid-template-areas:
+    "badge desc"
+    "title desc"
+    "conn  desc";
+  grid-template-rows: auto auto 1fr;
+  column-gap: 2.5rem;
+  padding: 2rem 1.9rem;
+}
+.lang-grid.solo .lang-badge { grid-area: badge; }
+.lang-grid.solo h3 { grid-area: title; }
+.lang-grid.solo .conn { grid-area: conn; margin-bottom: 0; }
+.lang-grid.solo p { grid-area: desc; align-self: center; font-size: 0.86rem; max-width: 62ch; }
 
 /* ---------- Bloque "no se conectan" (HTML/CSS/HTTP) ---------- */
 .no-conn {
@@ -934,6 +953,15 @@ footer {
   .layers { flex-direction: column; }
   .layer { border-right: none; border-bottom: 1px solid var(--border); }
   .layer:last-child { border-bottom: none; }
+  /* la tarjeta ancha vuelve a apilarse en celular */
+  .lang-grid.solo .lang-card {
+    grid-template-columns: 1fr;
+    grid-template-areas: "badge" "title" "conn" "desc";
+    grid-template-rows: auto;
+    row-gap: 0;
+  }
+  .lang-grid.solo .conn { margin-bottom: 0.85rem; }
+  .lang-grid.solo p { align-self: start; }
 }
 @media (max-width: 720px) {
   /* criterion becomes a full-width subheader, XAMPP/HeidiSQL stay side by side */
