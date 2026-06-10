@@ -632,10 +632,12 @@ footer {
 }
 .foot-grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;
   gap: 2rem;
   align-items: start;
 }
+.foot-col a { transition: color .2s; }
+.foot-col a:hover { color: var(--accent) !important; }
 .foot-brand {
   font-family: var(--serif);
   font-weight: 900;
@@ -660,6 +662,240 @@ footer {
 }
 .foot-bottom .accent { color: var(--accent); }
 
+/* ===========================================================
+   Componentes compartidos / Guía 2
+   =========================================================== */
+
+/* ---------- Switcher de guías (nav) ---------- */
+.brand { text-decoration: none; }
+.nav-right { display: flex; align-items: center; gap: 1rem; min-width: 0; }
+.guide-switch {
+  display: flex;
+  flex: 0 0 auto;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.guide-switch a {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  padding: 0.42rem 0.8rem;
+  color: var(--text-dim);
+  transition: color .2s, background .2s;
+  white-space: nowrap;
+}
+.guide-switch a + a { border-left: 1px solid var(--border); }
+.guide-switch a:hover { color: var(--accent); background: var(--bg-elev); }
+.guide-switch a.active { background: var(--accent); color: #000; font-weight: 800; }
+
+/* ---------- Badge de guía (hero) ---------- */
+.hero-guide {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  align-self: flex-start;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 50px;
+  padding: 0.4rem 0.95rem;
+  margin-bottom: 1.5rem;
+}
+.hero-guide::before {
+  content: "";
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+/* ---------- Callout de consigna del profesor ---------- */
+.prof-q {
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  background: var(--bg-elev);
+  border-radius: 0 6px 6px 0;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2.5rem;
+}
+.prof-q .q-label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+.prof-q p {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1rem, 2.2vw, 1.25rem);
+  line-height: 1.45;
+  color: var(--text);
+}
+
+/* ---------- Tarjetas de lenguajes / tecnologías (con color de marca) ---------- */
+.lang-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+.lang-card {
+  --c: var(--accent);
+  background: var(--bg-elev);
+  padding: 1.75rem 1.6rem;
+  position: relative;
+  transition: background .25s;
+  overflow: hidden;
+}
+.lang-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 3px;
+  background: var(--c);
+  opacity: 0.85;
+}
+.lang-card:hover { background: var(--bg-elev-2); }
+.lang-badge {
+  width: 48px; height: 48px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1.5px solid var(--c);
+  border-radius: 9px;
+  color: var(--c);
+  font-family: var(--mono);
+  font-weight: 800;
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
+  background: color-mix(in srgb, var(--c) 12%, transparent);
+}
+.lang-card h3 {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.35rem;
+  margin-bottom: 0.3rem;
+}
+.lang-card .conn {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: var(--c);
+  margin-bottom: 0.85rem;
+}
+.lang-card p { font-size: 0.81rem; color: var(--text-dim); line-height: 1.6; }
+.lang-card p code {
+  background: var(--accent-dim);
+  color: var(--accent);
+  padding: 0.05em 0.4em;
+  border-radius: 3px;
+  font-size: 0.95em;
+}
+
+/* ---------- Bloque "no se conectan" (HTML/CSS/HTTP) ---------- */
+.no-conn {
+  margin-top: 2.5rem;
+  border: 1px dashed #ff5f56;
+  border-radius: 8px;
+  background: rgba(255, 95, 86, 0.05);
+  padding: 1.75rem;
+}
+.no-conn .nc-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #ff7a72;
+  margin-bottom: 1.25rem;
+}
+.no-conn .nc-head::before { content: "✕"; font-size: 0.9rem; }
+.no-conn-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+.nc-item {
+  --c: #ff7a72;
+}
+.nc-item .lang-badge {
+  border-color: var(--c);
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 12%, transparent);
+}
+.nc-item h3 { font-family: var(--serif); font-size: 1.2rem; margin-bottom: 0.15rem; }
+.nc-item .role {
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: var(--c);
+  display: block;
+  margin-bottom: 0.6rem;
+}
+.nc-item p { font-size: 0.8rem; color: var(--text-dim); line-height: 1.6; }
+
+/* ---------- Diagrama de capas (Sección 1, Guía 2) ---------- */
+.layers {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0;
+  margin: 2.5rem 0 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.layer {
+  flex: 1;
+  min-width: 150px;
+  padding: 1.25rem 1rem;
+  text-align: center;
+  background: var(--bg-elev);
+  border-right: 1px solid var(--border);
+}
+.layer:last-child { border-right: none; }
+.layer b { display: block; font-family: var(--serif); font-size: 1rem; color: var(--text); margin-bottom: 0.25rem; }
+.layer small { font-size: 0.68rem; color: var(--text-faint); line-height: 1.4; display: block; }
+.layer.data { background: var(--bg-elev-2); }
+.layer.data b { color: var(--accent); }
+.layer .lyr-tag { font-family: var(--mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent-2); display: block; margin-bottom: 0.5rem; }
+
+/* ---------- Tabla "qué es / cómo se conecta" (Sección 2) ---------- */
+.tech-cat {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  margin: 2.75rem 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.tech-cat::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+.tech-cat:first-of-type { margin-top: 0; }
+
+/* ---------- Grilla de bloques de código (Sección 3) ---------- */
+.code-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+.code-grid .vs-col h3 { color: var(--c, var(--accent)); }
+
 /* ---------- Scroll reveal ---------- */
 .reveal {
   opacity: 0;
@@ -682,11 +918,22 @@ footer {
 /* ---------- Responsive ---------- */
 @media (max-width: 860px) {
   .versus { grid-template-columns: 1fr; }
+  .code-grid { grid-template-columns: 1fr; }
   .vs-badge { padding: 1.25rem; }
   .vs-badge span { transform: rotate(90deg); }
   .grid-2 { grid-template-columns: 1fr; }
   .tool-grid { grid-template-columns: 1fr; }
-  .foot-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .foot-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+}
+@media (max-width: 520px) {
+  .foot-grid { grid-template-columns: 1fr; gap: 2.25rem; }
+}
+@media (max-width: 760px) {
+  /* en pantallas chicas dejamos visible solo el switcher de guías */
+  .nav-links { display: none; }
+  .layers { flex-direction: column; }
+  .layer { border-right: none; border-bottom: 1px solid var(--border); }
+  .layer:last-child { border-bottom: none; }
 }
 @media (max-width: 720px) {
   /* criterion becomes a full-width subheader, XAMPP/HeidiSQL stay side by side */
@@ -721,6 +968,7 @@ footer {
     align-items: center;
     text-align: center;
   }
+  .hero-guide { align-self: center; }
   .hero-tag { justify-content: center; letter-spacing: 0.25em; }
   .hero h1 { max-width: 100%; margin-inline: auto; }
   .hero-sub { margin-inline: auto; }

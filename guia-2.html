@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conexión a Bases de Datos — Guía 2</title>
+<meta name="description" content="Cómo se conectan los lenguajes de programación a una base de datos, el ecosistema de motores y herramientas (MySQL, PostgreSQL, Prisma, SQLite, Cassandra…) y código real de conexión en C#, JavaScript, Python y JSON Server. Guía 2 — Programación, UTN. Por Juan Gabriel Díaz.">
+<meta name="author" content="Juan Gabriel Díaz">
+<meta name="theme-color" content="#0d0d0d">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Conexión a Bases de Datos — Guía 2">
+<meta property="og:description" content="Cómo se conectan los lenguajes a una base de datos, el ecosistema de motores y herramientas, y código real de conexión. Guía 2 — Programación, UTN.">
+<meta property="og:url" content="https://juandiaz26.github.io/backend-fundamentals/guia-2.html">
+<meta property="og:site_name" content="Fundamentos del Desarrollo Backend">
+<meta property="og:locale" content="es_AR">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Conexión a Bases de Datos — Guía 2">
+<meta name="twitter:description" content="Lenguajes ↔ base de datos, ecosistema de motores y herramientas, y código de conexión. Guía 2 — Programación, UTN. Por Juan Gabriel Díaz.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="brand" href="index.html">~/backend<b>.dev</b><span class="cursor" style="height:0.9em;width:0.5em;vertical-align:middle;"></span></a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#lenguajes"><span class="n">01</span>Lenguajes</a></li>
+        <li><a href="#ecosistema"><span class="n">02</span>Ecosistema</a></li>
+        <li><a href="#codigo"><span class="n">03</span>Código</a></li>
+      </ul>
+      <div class="guide-switch">
+        <a href="index.html">Guía 1</a>
+        <a href="guia-2.html" class="active">Guía 2</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero wrap">
+  <div class="hero-guide reveal">Guía 2 · de 2</div>
+  <div class="hero-tag reveal"><span class="dot"></span> Universidad · Programación · Bases de Datos</div>
+  <h1 class="reveal d1">Conexión a <span class="accent">Bases de Datos</span><span class="cursor"></span></h1>
+  <p class="hero-sub reveal d2">
+    Lenguajes<span class="sep">·</span>Motores<span class="sep">·</span>ORM<span class="sep">·</span>Herramientas<span class="sep">·</span>Código
+  </p>
+  <p class="hero-tagline reveal d3">Cómo el código se enchufa a los datos — Materia Programación, UTN.</p>
+  <div class="hero-meta reveal d4">
+    <span><b>03</b>secciones</span>
+    <span><b>19</b>tecnologías</span>
+    <span><b>2026</b>comisión 2</span>
+  </div>
+</header>
+
+<!-- SECTION 1 — Lenguajes -->
+<section id="lenguajes" class="section-pad">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">01</span>
+      <div>
+        <span class="sec-kicker">Lenguajes ↔ Datos</span>
+        <h2 class="sec-title">¿Cómo se conectan los lenguajes a una base de datos?</h2>
+      </div>
+    </div>
+
+    <div class="prof-q reveal">
+      <span class="q-label">❯ Consigna del profesor</span>
+      <p>¿Cómo se conectan a una base de datos los lenguajes de programación C, C++, C#, JavaScript, Java, Python, HTTP, HTML y CSS?</p>
+    </div>
+
+    <p class="flow-def reveal d1" style="font-size:clamp(1rem,2.2vw,1.3rem);">
+      Un lenguaje se conecta a una base de datos a través de un <b style="color:var(--accent)">driver</b> o
+      <b style="color:var(--accent)">conector</b>: una librería que implementa el protocolo de la base. El patrón es
+      siempre el mismo → <code>importar driver</code> → <code>abrir conexión</code> (host, puerto, usuario,
+      contraseña, base) → <code>enviar SQL</code> → <code>recibir resultados</code> → <code>cerrar</code>.
+    </p>
+
+    <div class="lang-grid reveal d2">
+      <article class="lang-card" style="--c:#A8B9CC">
+        <span class="lang-badge">C</span>
+        <h3>C</h3>
+        <span class="conn">Driver nativo · ODBC</span>
+        <p>Usa la API en C del motor (ej. la <em>MySQL C API</em> / <code>libmysqlclient</code>) o ODBC. Se incluye la cabecera, se abre la conexión con <code>mysql_real_connect()</code> y se ejecutan consultas con funciones en C.</p>
+      </article>
+
+      <article class="lang-card" style="--c:#659AD2">
+        <span class="lang-badge">C++</span>
+        <h3>C++</h3>
+        <span class="conn">Connector/C++ · libpqxx</span>
+        <p>Usa conectores orientados a objetos como <em>MySQL Connector/C++</em> o <code>libpqxx</code> (PostgreSQL). También ODBC o la capa Qt SQL. Encapsula la conexión y las consultas en objetos.</p>
+      </article>
+
+      <article class="lang-card" style="--c:#A179DC">
+        <span class="lang-badge">C#</span>
+        <h3>C#</h3>
+        <span class="conn">ADO.NET · Entity Framework</span>
+        <p>Se conecta con <em>ADO.NET</em> y un proveedor (<code>Microsoft.Data.SqlClient</code>, <code>MySql.Data</code>). Usa una cadena de conexión y objetos <code>Connection</code>/<code>Command</code>. Su ORM es Entity Framework.</p>
+      </article>
+
+      <article class="lang-card" style="--c:#F7DF1E">
+        <span class="lang-badge">JS</span>
+        <h3>JavaScript</h3>
+        <span class="conn">Driver npm · Node.js</span>
+        <p>En el servidor (<em>Node.js</em>) usa drivers como <code>mysql2</code> o <code>pg</code>, o un ORM como Prisma. En el navegador <b style="color:var(--text)">no</b> se conecta directo a la BD: le pide los datos a una API por seguridad.</p>
+      </article>
+
+      <article class="lang-card" style="--c:#E76F00">
+        <span class="lang-badge">J</span>
+        <h3>Java</h3>
+        <span class="conn">JDBC</span>
+        <p>Se conecta mediante <em>JDBC</em> (Java Database Connectivity): una API estándar más un driver por cada motor. <code>Hibernate</code> y <code>JPA</code> son sus ORMs más usados.</p>
+      </article>
+
+      <article class="lang-card" style="--c:#4B8BBE">
+        <span class="lang-badge">Py</span>
+        <h3>Python</h3>
+        <span class="conn">DB-API 2.0</span>
+        <p>Usa módulos <em>DB-API 2.0</em>: <code>mysql-connector-python</code>, <code>psycopg2</code> (PostgreSQL) o <code>sqlite3</code> (incluido). <code>SQLAlchemy</code> y el ORM de Django son las capas más comunes.</p>
+      </article>
+    </div>
+
+    <!-- No se conectan -->
+    <div class="no-conn reveal d3">
+      <div class="nc-head">Estos NO se conectan a una base de datos</div>
+      <div class="no-conn-grid">
+        <div class="nc-item">
+          <span class="lang-badge">&lt;&gt;</span>
+          <h3>HTML</h3>
+          <span class="role">Presentación · Estructura</span>
+          <p>Lenguaje de marcado: estructura el contenido que ve el usuario en el navegador. No tiene lógica ni acceso a datos. Solo <em>muestra</em> la información que el backend ya obtuvo de la base.</p>
+        </div>
+        <div class="nc-item">
+          <span class="lang-badge">{ }</span>
+          <h3>CSS</h3>
+          <span class="role">Presentación · Estilos</span>
+          <p>Lenguaje de estilos: define colores, tipografías y layout. No ejecuta lógica ni se comunica con ninguna base de datos. Es puramente <em>visual</em>.</p>
+        </div>
+        <div class="nc-item">
+          <span class="lang-badge">://</span>
+          <h3>HTTP</h3>
+          <span class="role">Protocolo · Transporte</span>
+          <p>No es un lenguaje, es un <em>protocolo</em>. Es el "cartero" que transporta los <code>request</code> y <code>response</code> entre el navegador y el servidor. No se conecta a la BD: es el canal por donde viaja la petición.</p>
+        </div>
+      </div>
+
+      <!-- Diagrama de capas -->
+      <div class="layers">
+        <div class="layer">
+          <span class="lyr-tag">Capa 1</span>
+          <b>Navegador</b>
+          <small>HTML + CSS<br>(presentación)</small>
+        </div>
+        <div class="layer">
+          <span class="lyr-tag">Transporte</span>
+          <b>HTTP</b>
+          <small>request / response<br>(el cartero)</small>
+        </div>
+        <div class="layer">
+          <span class="lyr-tag">Capa 2</span>
+          <b>Servidor</b>
+          <small>C# · Java · Python · JS<br>(lógica)</small>
+        </div>
+        <div class="layer data">
+          <span class="lyr-tag">Capa 3</span>
+          <b>Base de Datos</b>
+          <small>aquí se conecta<br>solo el backend</small>
+        </div>
+      </div>
+      <p style="margin-top:1.5rem;font-size:0.84rem;color:var(--text-dim);line-height:1.65;">
+        <b style="color:var(--text);">¿Por qué el profe los incluyó?</b> Para que distingamos las <b style="color:var(--accent)">capas</b>:
+        presentación (HTML/CSS), transporte (HTTP) y lógica/datos (el lenguaje backend). De toda la lista, el único que
+        realmente <b style="color:var(--accent)">se enchufa</b> a la base de datos es el lenguaje del servidor.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2 — Ecosistema -->
+<section id="ecosistema" class="section-pad">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">02</span>
+      <div>
+        <span class="sec-kicker">El ecosistema de datos</span>
+        <h2 class="sec-title">¿Qué son y cómo se conectan?</h2>
+      </div>
+    </div>
+
+    <div class="prof-q reveal">
+      <span class="q-label">❯ Consigna del profesor</span>
+      <p>¿Cómo se conectan JsonServer, SQL, MySQL, PostgreSQL, Prisma7, Heidi, XAMPP, SQLite, MariaDB y Cassandra?</p>
+    </div>
+
+    <p class="flow-def reveal d1" style="font-size:clamp(1rem,2.2vw,1.3rem);">
+      Cuidado: <b style="color:var(--accent)">no todo en esta lista es una base de datos</b>. Hay un lenguaje de
+      consulta, motores relacionales, un motor NoSQL, un ORM, herramientas de gestión y hasta una API falsa.
+      Clasificarlos es la clave para entender cómo encaja cada uno.
+    </p>
+
+    <div class="reveal d2">
+      <!-- Lenguaje -->
+      <div class="tech-cat">Lenguaje de consulta</div>
+      <div class="lang-grid">
+        <article class="lang-card" style="--c:#E38D13">
+          <span class="lang-badge">SQL</span>
+          <h3>SQL</h3>
+          <span class="conn">Lenguaje · no es una BD</span>
+          <p><em>Structured Query Language</em>. No es una base de datos, sino el idioma con el que se consultan las bases relacionales (<code>SELECT</code>, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>). Lo hablan MySQL, PostgreSQL, MariaDB y SQLite.</p>
+        </article>
+      </div>
+
+      <!-- Motores relacionales -->
+      <div class="tech-cat">Motores relacionales (SQL)</div>
+      <div class="lang-grid">
+        <article class="lang-card" style="--c:#4479A1">
+          <span class="lang-badge">My</span>
+          <h3>MySQL</h3>
+          <span class="conn">Puerto 3306 · cliente-servidor</span>
+          <p>El RDBMS de código abierto más popular. Se conecta por el <em>puerto 3306</em> con un driver desde cualquier lenguaje. Modelo cliente-servidor: hay un proceso del motor corriendo.</p>
+        </article>
+        <article class="lang-card" style="--c:#B97A56">
+          <span class="lang-badge">Ma</span>
+          <h3>MariaDB</h3>
+          <span class="conn">Compatible con MySQL · 3306</span>
+          <p>Un <em>fork</em> de MySQL hecho por sus autores originales. Compatible casi 1:1 (mismo protocolo y puerto 3306), así que se conecta exactamente igual que MySQL.</p>
+        </article>
+        <article class="lang-card" style="--c:#5096C8">
+          <span class="lang-badge">Pg</span>
+          <h3>PostgreSQL</h3>
+          <span class="conn">Puerto 5432 · objeto-relacional</span>
+          <p>RDBMS objeto-relacional avanzado, muy estricto con tipos e integridad. Se conecta por el <em>puerto 5432</em> con drivers como <code>pg</code> (Node) o <code>psycopg2</code> (Python).</p>
+        </article>
+        <article class="lang-card" style="--c:#4FB3E8">
+          <span class="lang-badge">lt</span>
+          <h3>SQLite</h3>
+          <span class="conn">Embebido · sin servidor</span>
+          <p>RDBMS <em>embebido y sin servidor</em>: la base entera es un único archivo <code>.db</code>. No hay proceso que levantar — te conectás abriendo el archivo. Ideal para apps locales y móviles.</p>
+        </article>
+      </div>
+
+      <!-- NoSQL -->
+      <div class="tech-cat">Motor NoSQL</div>
+      <div class="lang-grid">
+        <article class="lang-card" style="--c:#3AAFDA">
+          <span class="lang-badge">Cs</span>
+          <h3>Cassandra</h3>
+          <span class="conn">Puerto 9042 · CQL · distribuida</span>
+          <p>Base <em>NoSQL</em> distribuida de tipo <em>wide-column</em>. Pensada para volúmenes enormes y alta disponibilidad repartida en muchos servidores. Se consulta con <code>CQL</code> (parecido a SQL) por el puerto 9042.</p>
+        </article>
+      </div>
+
+      <!-- ORM -->
+      <div class="tech-cat">ORM (capa intermedia)</div>
+      <div class="lang-grid">
+        <article class="lang-card" style="--c:#7B82E8">
+          <span class="lang-badge">◭</span>
+          <h3>Prisma 7</h3>
+          <span class="conn">ORM · DATABASE_URL</span>
+          <p>Object-Relational Mapping para Node.js/TypeScript. Se ubica <em>entre tu código y la base</em>: definís un schema y Prisma genera un cliente type-safe que traduce a SQL. Se conecta con una cadena <code>DATABASE_URL</code>.</p>
+        </article>
+      </div>
+
+      <!-- Herramientas -->
+      <div class="tech-cat">Herramientas</div>
+      <div class="lang-grid">
+        <article class="lang-card" style="--c:#59A6A0">
+          <span class="lang-badge">▦</span>
+          <h3>HeidiSQL</h3>
+          <span class="conn">Cliente gráfico · se conecta</span>
+          <p>Cliente gráfico para administrar MySQL, MariaDB y PostgreSQL. Se <em>conecta</em> a un motor que ya está corriendo para gestionarlo visualmente: ver tablas, ejecutar SQL, importar/exportar.</p>
+        </article>
+        <article class="lang-card" style="--c:#FB7A24">
+          <span class="lang-badge">⛁</span>
+          <h3>XAMPP</h3>
+          <span class="conn">Entorno local · levanta el motor</span>
+          <p>Paquete que incluye Apache, MariaDB/MySQL, PHP y Perl. Su rol es <em>levantar</em> el motor de base de datos y el servidor web en tu propia máquina, sin configuración manual.</p>
+        </article>
+      </div>
+
+      <!-- Mock API -->
+      <div class="tech-cat">Mock API (no es una BD)</div>
+      <div class="lang-grid">
+        <article class="lang-card" style="--c:#CB3837">
+          <span class="lang-badge">{ }</span>
+          <h3>JSON Server</h3>
+          <span class="conn">API REST falsa · por HTTP</span>
+          <p>Herramienta de Node que crea una <em>API REST falsa</em> a partir de un archivo <code>db.json</code>. No es una base de datos real: se usa para prototipar y simular un backend. Se "conecta" por <em>HTTP</em> (GET/POST a sus endpoints).</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3 — Código -->
+<section id="codigo" class="section-pad">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">03</span>
+      <div>
+        <span class="sec-kicker">Manos a la obra</span>
+        <h2 class="sec-title">Código de conexión a la base de datos</h2>
+      </div>
+    </div>
+
+    <div class="prof-q reveal">
+      <span class="q-label">❯ Consigna del profesor</span>
+      <p>Escribir el código necesario para la conexión a la DB para C#, JS, Python y JSON.</p>
+    </div>
+
+    <p class="flow-def reveal d1" style="font-size:clamp(1rem,2.2vw,1.3rem);">
+      Cuatro formas de hacer lo mismo: abrir la conexión a una base <code>tienda</code> y leer la tabla
+      <code>clientes</code>. Fijate que el patrón se repite en todos: <b style="color:var(--accent)">conectar →
+      consultar → recorrer → cerrar</b>.
+    </p>
+
+    <div class="code-grid reveal d2">
+      <!-- C# -->
+      <div class="vs-col" style="--c:#A179DC;border-color:#A179DC55;">
+        <span class="label" style="color:#A179DC;">C# · ADO.NET</span>
+        <h3>C#</h3>
+        <div class="term">
+          <div class="term-bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="name">Programa.cs</span></div>
+          <pre><code><span class="k">using</span> MySql<span class="p">.</span>Data<span class="p">.</span>MySqlClient<span class="p">;</span>
+
+<span class="k">string</span> cadena <span class="p">=</span> <span class="s">"server=localhost;port=3306;user=root;password=secret;database=tienda"</span><span class="p">;</span>
+
+<span class="k">using var</span> conexion <span class="p">=</span> <span class="k">new</span> <span class="fn">MySqlConnection</span><span class="p">(</span>cadena<span class="p">);</span>
+conexion<span class="p">.</span><span class="fn">Open</span><span class="p">();</span>
+
+<span class="k">var</span> comando <span class="p">=</span> <span class="k">new</span> <span class="fn">MySqlCommand</span><span class="p">(</span><span class="s">"SELECT id, nombre FROM clientes"</span><span class="p">,</span> conexion<span class="p">);</span>
+<span class="k">using var</span> lector <span class="p">=</span> comando<span class="p">.</span><span class="fn">ExecuteReader</span><span class="p">();</span>
+
+<span class="k">while</span> <span class="p">(</span>lector<span class="p">.</span><span class="fn">Read</span><span class="p">()) {</span>
+    Console<span class="p">.</span><span class="fn">WriteLine</span><span class="p">(</span><span class="s">$"{lector.GetInt32(0)} - {lector.GetString(1)}"</span><span class="p">);</span>
+<span class="p">}</span></code></pre>
+        </div>
+      </div>
+
+      <!-- JavaScript -->
+      <div class="vs-col" style="--c:#F7DF1E;border-color:#F7DF1E55;">
+        <span class="label" style="color:#F7DF1E;">JavaScript · Node.js</span>
+        <h3>JS</h3>
+        <div class="term">
+          <div class="term-bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="name">conexion.js</span></div>
+          <pre><code><span class="k">const</span> mysql <span class="p">=</span> <span class="fn">require</span><span class="p">(</span><span class="s">'mysql2/promise'</span><span class="p">);</span>
+
+<span class="k">const</span> conexion <span class="p">=</span> <span class="k">await</span> mysql<span class="p">.</span><span class="fn">createConnection</span><span class="p">({</span>
+  host<span class="p">:</span> <span class="s">'localhost'</span><span class="p">,</span>
+  user<span class="p">:</span> <span class="s">'root'</span><span class="p">,</span>
+  password<span class="p">:</span> <span class="s">'secret'</span><span class="p">,</span>
+  database<span class="p">:</span> <span class="s">'tienda'</span><span class="p">,</span>
+<span class="p">});</span>
+
+<span class="k">const</span> <span class="p">[</span>filas<span class="p">]</span> <span class="p">=</span> <span class="k">await</span> conexion<span class="p">.</span><span class="fn">query</span><span class="p">(</span><span class="s">'SELECT id, nombre FROM clientes'</span><span class="p">);</span>
+console<span class="p">.</span><span class="fn">log</span><span class="p">(</span>filas<span class="p">);</span>
+
+<span class="k">await</span> conexion<span class="p">.</span><span class="fn">end</span><span class="p">();</span></code></pre>
+        </div>
+      </div>
+
+      <!-- Python -->
+      <div class="vs-col" style="--c:#4B8BBE;border-color:#4B8BBE55;">
+        <span class="label" style="color:#4B8BBE;">Python · mysql-connector</span>
+        <h3>Python</h3>
+        <div class="term">
+          <div class="term-bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="name">conexion.py</span></div>
+          <pre><code><span class="k">import</span> mysql<span class="p">.</span>connector
+
+conexion <span class="p">=</span> mysql<span class="p">.</span>connector<span class="p">.</span><span class="fn">connect</span><span class="p">(</span>
+    host<span class="p">=</span><span class="s">"localhost"</span><span class="p">,</span>
+    user<span class="p">=</span><span class="s">"root"</span><span class="p">,</span>
+    password<span class="p">=</span><span class="s">"secret"</span><span class="p">,</span>
+    database<span class="p">=</span><span class="s">"tienda"</span><span class="p">,</span>
+<span class="p">)</span>
+
+cursor <span class="p">=</span> conexion<span class="p">.</span><span class="fn">cursor</span><span class="p">()</span>
+cursor<span class="p">.</span><span class="fn">execute</span><span class="p">(</span><span class="s">"SELECT id, nombre FROM clientes"</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="p">(</span>id<span class="p">,</span> nombre<span class="p">)</span> <span class="k">in</span> cursor<span class="p">.</span><span class="fn">fetchall</span><span class="p">():</span>
+    <span class="fn">print</span><span class="p">(</span>id<span class="p">,</span> nombre<span class="p">)</span>
+
+cursor<span class="p">.</span><span class="fn">close</span><span class="p">()</span>
+conexion<span class="p">.</span><span class="fn">close</span><span class="p">()</span></code></pre>
+        </div>
+      </div>
+
+      <!-- JSON Server -->
+      <div class="vs-col" style="--c:#CB3837;border-color:#CB383755;">
+        <span class="label" style="color:#CB3837;">JSON Server · API REST falsa</span>
+        <h3>JSON</h3>
+        <div class="term">
+          <div class="term-bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="name">terminal</span></div>
+          <pre><code><span class="c"># 1) Instalar JSON Server (Node.js)</span>
+<span class="fn">npm</span> install -g json-server
+
+<span class="c"># 2) Crear el archivo db.json con los datos:</span>
+<span class="c">#    { "clientes": [ { "id": 1, "nombre": "Ana" } ] }</span>
+
+<span class="c"># 3) Levantar la API REST falsa (puerto 3000)</span>
+<span class="fn">json-server</span> --watch db.json</code></pre>
+        </div>
+        <div class="term" style="margin-top:1rem;">
+          <div class="term-bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="name">consumir.js</span></div>
+          <pre><code><span class="c">// Conectarse = pedir los datos a la API por HTTP</span>
+<span class="k">const</span> respuesta <span class="p">=</span> <span class="k">await</span> <span class="fn">fetch</span><span class="p">(</span><span class="s">'http://localhost:3000/clientes'</span><span class="p">);</span>
+<span class="k">const</span> clientes <span class="p">=</span> <span class="k">await</span> respuesta<span class="p">.</span><span class="fn">json</span><span class="p">();</span>
+console<span class="p">.</span><span class="fn">log</span><span class="p">(</span>clientes<span class="p">);</span></code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="reveal">
+        <div class="foot-brand">Conexión a<br><span class="accent">Bases de Datos</span></div>
+        <p style="font-size:0.78rem;color:var(--text-faint);margin-top:1rem;font-style:italic;font-family:var(--serif);">Guía 2 — Cómo el código se enchufa a los datos.</p>
+      </div>
+      <div class="foot-col reveal d1">
+        <h4>Institución</h4>
+        <p>Comisión 2 de Programación</p>
+        <p>UTN — Facultad Regional</p>
+        <p>Materia: Programación 2</p>
+      </div>
+      <div class="foot-col reveal d2">
+        <h4>Autor</h4>
+        <p>Alumno: <b>Juan Gabriel Díaz</b></p>
+        <p>Año: <b>2026</b></p>
+      </div>
+      <div class="foot-col reveal d3">
+        <h4>Guías</h4>
+        <p><a href="index.html" style="color:var(--text-dim);">› Guía 1 — Backend</a></p>
+        <p><a href="guia-2.html" style="color:var(--accent);">› Guía 2 — Conexión a BD</a></p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span><span class="accent">$</span> echo "conexión a bases de datos" — 2026</span>
+      <span>C# · JavaScript · Python · JSON Server</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,7 +1,11 @@
-# Fundamentos del Desarrollo Backend
+# Proyecto de Programación — UTN (2 guías)
 
-Landing page educativa sobre conceptos de desarrollo backend para la materia
-**Programación** (UTN — Facultad Regional, Comisión 2).
+Sitio web educativo con **dos guías** de la materia **Programación 2**
+(UTN — Facultad Regional, Comisión 2), cada una en su propia página y navegables
+entre sí desde el menú superior:
+
+- **Guía 1 — Fundamentos del Desarrollo Backend** (`index.html`)
+- **Guía 2 — Conexión a Bases de Datos** (`guia-2.html`)
 
 Tema visual: dark / editorial-terminal, con tipografía monoespaciada + serif y
 acentos en verde y cyan.
@@ -9,24 +13,28 @@ acentos en verde y cyan.
 ## 🔗 Enlaces del proyecto
 
 - **Repositorio:** https://github.com/JuanDiaz26/backend-fundamentals
-- **Sitio en vivo (GitHub Pages):** https://juandiaz26.github.io/backend-fundamentals/
+- **Guía 1 (inicio):** https://juandiaz26.github.io/backend-fundamentals/
+- **Guía 2:** https://juandiaz26.github.io/backend-fundamentals/guia-2.html
 
 ## Estructura del proyecto
 
 ```
 .
-├── index.html        # Estructura y contenido de la página
+├── index.html        # Guía 1 — Fundamentos del Desarrollo Backend (inicio)
+├── guia-2.html       # Guía 2 — Conexión a Bases de Datos
 ├── css/
 │   └── styles.css    # Todos los estilos (variables, layout, responsive)
 ├── js/
 │   └── main.js       # Animaciones de scroll + nav activa (IntersectionObserver)
+├── favicon.svg
 └── README.md
 ```
 
 ## Cómo verla
 
-Abrí `index.html` en cualquier navegador moderno (doble clic), o entrá directo al
-sitio publicado en GitHub Pages (link de arriba).
+Abrí `index.html` en cualquier navegador moderno (doble clic) y usá el switcher
+**Guía 1 / Guía 2** del menú, o entrá directo al sitio publicado en GitHub Pages
+(links de arriba).
 
 > Las fuentes se cargan desde Google Fonts, así que conviene tener conexión a
 > internet la primera vez para verlas correctamente.
@@ -41,10 +49,10 @@ python -m http.server 8080
 
 ---
 
-# 📚 Resumen teórico (para la exposición)
+# 📚 Resumen teórico — GUÍA 1 (Backend)
 
-Resumen punto por punto de todos los conceptos que aparecen en la página. Sirve
-como guía de estudio para defender el proyecto.
+Resumen punto por punto de los conceptos de la **Guía 1**. Sirve como guía de
+estudio para defender el proyecto.
 
 ## 1. Definiciones — ¿Qué es y para qué sirve?
 
@@ -213,6 +221,74 @@ decir, se **conecta** a una base que ya está corriendo para gestionarla.
 ```
 [XAMPP: motor corriendo] → [HeidiSQL: ventana de administración]
 ```
+
+---
+
+# 📚 Resumen teórico — GUÍA 2 (Conexión a Bases de Datos)
+
+Resumen de la **Guía 2**, organizada en las 3 consignas del profesor.
+
+## 1. ¿Cómo se conectan los lenguajes a una base de datos?
+
+> **Consigna:** ¿Cómo se conectan a una base de datos los lenguajes C, C++, C#,
+> JavaScript, Java, Python, HTTP, HTML y CSS?
+
+**Idea base:** un lenguaje se conecta mediante un **driver/conector** (una librería
+que implementa el protocolo de la base). El patrón es siempre el mismo:
+**importar driver → abrir conexión** (host, puerto, usuario, contraseña, base) **→
+enviar SQL → recibir resultados → cerrar**.
+
+| Lenguaje | Cómo se conecta |
+|---|---|
+| **C** | API en C del motor (MySQL C API / `libmysqlclient`) u ODBC |
+| **C++** | Conectores OO: MySQL Connector/C++, `libpqxx`, ODBC, Qt SQL |
+| **C#** | **ADO.NET** + proveedor (`Microsoft.Data.SqlClient`, `MySql.Data`); ORM: Entity Framework |
+| **JavaScript** | En Node.js: drivers `mysql2` / `pg` o Prisma. En el navegador **no** se conecta directo: usa una API |
+| **Java** | **JDBC** (API estándar + driver); ORMs: Hibernate / JPA |
+| **Python** | **DB-API 2.0**: `mysql-connector`, `psycopg2`, `sqlite3`; ORM: SQLAlchemy / Django |
+
+**Los que NO se conectan (y por qué):**
+- **HTML** → lenguaje de **presentación/estructura**. Solo muestra datos ya obtenidos.
+- **CSS** → lenguaje de **estilos**. Puramente visual, sin lógica ni datos.
+- **HTTP** → **protocolo de transporte** (el "cartero"). No es un lenguaje; es el
+  canal por donde viaja la petición.
+
+> **Por qué el profe los puso:** para distinguir las **capas** →
+> presentación (HTML/CSS) · transporte (HTTP) · lógica/datos (lenguaje backend).
+> Solo el backend se enchufa a la base.
+>
+> `Navegador (HTML/CSS) → [HTTP] → Servidor (lenguaje) → Base de Datos`
+
+## 2. El ecosistema: ¿qué es cada uno y cómo se conecta?
+
+> **Consigna:** ¿Cómo se conectan JsonServer, SQL, MySQL, PostgreSQL, Prisma7,
+> Heidi, XAMPP, SQLite, MariaDB y Cassandra?
+
+**Clave:** no todo es una base de datos. Hay que clasificarlos.
+
+| Tecnología | Categoría | Qué es / cómo se conecta |
+|---|---|---|
+| **SQL** | Lenguaje | El idioma para consultar bases relacionales. No es una BD |
+| **MySQL** | Motor SQL | RDBMS open-source. Puerto **3306**, con driver |
+| **MariaDB** | Motor SQL | Fork de MySQL, compatible 1:1 (mismo puerto 3306) |
+| **PostgreSQL** | Motor SQL | Objeto-relacional avanzado. Puerto **5432** |
+| **SQLite** | Motor SQL | **Embebido, sin servidor**: la base es un archivo `.db` |
+| **Cassandra** | Motor NoSQL | Distribuida wide-column. Se consulta con **CQL**, puerto 9042 |
+| **Prisma 7** | ORM | Capa entre el código y la base. Se conecta con `DATABASE_URL` |
+| **HeidiSQL** | Herramienta | Cliente gráfico que **se conecta** a un motor para administrarlo |
+| **XAMPP** | Herramienta | Entorno local que **levanta** el motor (Apache + MariaDB/MySQL) |
+| **JSON Server** | Mock API | API REST **falsa** desde un `db.json`. Se usa por **HTTP**. No es una BD |
+
+## 3. Código de conexión (C#, JS, Python, JSON Server)
+
+> **Consigna:** Escribir el código necesario para la conexión a la DB para C#, JS,
+> Python y JSON.
+
+Todos siguen el mismo patrón: **conectar → consultar → recorrer → cerrar**. El
+código completo y comentado está en la página (`guia-2.html`, Sección 03), con
+ejemplos para **C# (ADO.NET)**, **JavaScript (mysql2/Node)**, **Python
+(mysql-connector)** y **JSON Server** (levantar la API falsa + consumirla con
+`fetch`).
 
 ---
 
