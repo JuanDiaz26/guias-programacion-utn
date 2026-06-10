@@ -12,9 +12,9 @@ acentos en verde y cyan.
 
 ## 🔗 Enlaces del proyecto
 
-- **Repositorio:** https://github.com/JuanDiaz26/backend-fundamentals
-- **Guía 1 (inicio):** https://juandiaz26.github.io/backend-fundamentals/
-- **Guía 2:** https://juandiaz26.github.io/backend-fundamentals/guia-2.html
+- **Repositorio:** https://github.com/JuanDiaz26/guias-programacion-utn
+- **Guía 1 (inicio):** https://juandiaz26.github.io/guias-programacion-utn/
+- **Guía 2:** https://juandiaz26.github.io/guias-programacion-utn/guia-2.html
 
 ## Estructura del proyecto
 
