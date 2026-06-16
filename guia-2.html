@@ -38,6 +38,7 @@
         <li><a href="#lenguajes"><span class="n">01</span>Lenguajes</a></li>
         <li><a href="#ecosistema"><span class="n">02</span>Ecosistema</a></li>
         <li><a href="#codigo"><span class="n">03</span>Código</a></li>
+        <li><a href="#axios"><span class="n">04</span>Axios</a></li>
       </ul>
       <div class="guide-switch">
         <a href="index.html">Guía 1</a>
@@ -57,7 +58,7 @@
   </p>
   <p class="hero-tagline reveal d3">Guía de investigación 2 — Materia: Programación, UTN.</p>
   <div class="hero-meta reveal d4">
-    <span><b>03</b>secciones</span>
+    <span><b>04</b>secciones</span>
     <span><b>19</b>tecnologías</span>
     <span><b>2026</b>comisión 2</span>
   </div>
@@ -422,6 +423,100 @@ console<span class="p">.</span><span class="fn">log</span><span class="p">(</spa
   </div>
 </section>
 
+<!-- SECTION 4 — Axios -->
+<section id="axios" class="section-pad">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">04</span>
+      <div>
+        <span class="sec-kicker">Extra · Cliente HTTP</span>
+        <h2 class="sec-title">Conexión con Axios</h2>
+      </div>
+    </div>
+
+    <p class="flow-def reveal d1" style="font-size:clamp(1rem,2.2vw,1.3rem);">
+      <b style="color:var(--accent)">Axios</b> es un cliente HTTP basado en promesas para JavaScript, que
+      funciona tanto en el <em>navegador</em> como en <em>Node.js</em>. Es una de las librerías más usadas para
+      consumir <b style="color:var(--accent)">APIs REST</b>.
+    </p>
+
+    <div class="note reveal d1" style="margin-bottom:2.5rem;">
+      <b>Importante:</b> Axios <b>no se conecta directamente a la base de datos</b>. Hace peticiones HTTP a una
+      <b>API</b>, y es esa API la que se conecta a la base. Axios es el puente entre el <em>frontend</em> y la
+      <em>API</em>, no entre el frontend y la base — igual que pasa con el navegador.
+    </div>
+
+    <div class="flow reveal d2">
+      <div class="flow-node endpt">Frontend<small>Axios</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node mw">HTTP<small>request / response</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">API / Backend<small>lógica</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node endpt">Base de Datos<small>datos</small></div>
+    </div>
+
+    <div class="reveal d2">
+      <div class="tech-cat">Instalación</div>
+      <div class="term">
+        <div class="term-bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="name">terminal</span></div>
+        <pre><code><span class="c"># Instalar Axios (en el proyecto de Node.js o del frontend)</span>
+<span class="fn">npm</span> install axios</code></pre>
+      </div>
+    </div>
+
+    <div class="code-grid reveal d3" style="margin-top:1.5rem;">
+      <!-- GET -->
+      <div class="vs-col" style="--c:#5A29E4;border-color:#5A29E455;">
+        <span class="label" style="color:#8a6cf0;">GET · leer datos</span>
+        <h3>Leer</h3>
+        <div class="term">
+          <div class="term-bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="name">leer.js</span></div>
+          <pre><code><span class="k">const</span> axios <span class="p">=</span> <span class="fn">require</span><span class="p">(</span><span class="s">'axios'</span><span class="p">);</span>
+
+<span class="k">async function</span> <span class="fn">obtenerClientes</span><span class="p">() {</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="c">// pide los datos a la API (que habla con la BD)</span>
+    <span class="k">const</span> <span class="p">{</span> data <span class="p">}</span> <span class="p">=</span> <span class="k">await</span> axios<span class="p">.</span><span class="fn">get</span><span class="p">(</span><span class="s">'http://localhost:3000/clientes'</span><span class="p">);</span>
+    console<span class="p">.</span><span class="fn">log</span><span class="p">(</span>data<span class="p">);</span>
+  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span>error<span class="p">) {</span>
+    console<span class="p">.</span><span class="fn">error</span><span class="p">(</span><span class="s">'Error:'</span><span class="p">,</span> error<span class="p">.</span>message<span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="fn">obtenerClientes</span><span class="p">();</span></code></pre>
+        </div>
+      </div>
+
+      <!-- POST -->
+      <div class="vs-col" style="--c:#5A29E4;border-color:#5A29E455;">
+        <span class="label" style="color:#8a6cf0;">POST · crear datos</span>
+        <h3>Crear</h3>
+        <div class="term">
+          <div class="term-bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="name">crear.js</span></div>
+          <pre><code><span class="k">const</span> axios <span class="p">=</span> <span class="fn">require</span><span class="p">(</span><span class="s">'axios'</span><span class="p">);</span>
+
+<span class="k">async function</span> <span class="fn">crearCliente</span><span class="p">() {</span>
+  <span class="k">const</span> nuevo <span class="p">=</span> <span class="p">{</span> nombre<span class="p">:</span> <span class="s">'Ana'</span><span class="p">,</span> email<span class="p">:</span> <span class="s">'ana@mail.com'</span> <span class="p">};</span>
+
+  <span class="c">// envía el nuevo cliente a la API por POST</span>
+  <span class="k">const</span> <span class="p">{</span> data <span class="p">}</span> <span class="p">=</span> <span class="k">await</span> axios<span class="p">.</span><span class="fn">post</span><span class="p">(</span><span class="s">'http://localhost:3000/clientes'</span><span class="p">,</span> nuevo<span class="p">);</span>
+  console<span class="p">.</span><span class="fn">log</span><span class="p">(</span><span class="s">'Creado:'</span><span class="p">,</span> data<span class="p">);</span>
+<span class="p">}</span>
+
+<span class="fn">crearCliente</span><span class="p">();</span></code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="note reveal d3" style="margin-top:2rem;">
+      <b>Axios vs fetch:</b> Axios convierte la respuesta a JSON automáticamente, detecta los errores por código
+      de estado HTTP y permite configurar <code style="color:var(--accent)">baseURL</code>, <code style="color:var(--accent)">timeout</code>
+      e interceptores. <code style="color:var(--accent)">fetch</code> ya viene incluido en el navegador y no necesita instalarse.
+    </div>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
   <div class="wrap">
@@ -448,7 +543,7 @@ console<span class="p">.</span><span class="fn">log</span><span class="p">(</spa
     </div>
     <div class="foot-bottom">
       <span><span class="accent">$</span> echo "conexión a bases de datos" — 2026</span>
-      <span>C# · JavaScript · Python · JSON Server</span>
+      <span>C# · JavaScript · Python · JSON Server · Axios</span>
     </div>
   </div>
 </footer>
